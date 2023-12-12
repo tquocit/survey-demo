@@ -15,18 +15,7 @@ class UserManager {
     }
     
     func loginUser(username: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
-        let baseUrl = "https://survey-api.nimblehq.co"
-        let apiUrl = baseUrl + "/api/v1/oauth/token"
-        
-        guard let url = URL(string: apiUrl) else {
-            completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        // Customize the request body with your authentication parameters
+        let endpoint = "/api/v1/oauth/token"
         let parameters = [
             "grant_type": "password",
             "email": username,
@@ -35,19 +24,9 @@ class UserManager {
             "client_secret": "lMQb900L-mTeU-FVTCwyhjsfBwRCxwwbCitPob96cuU"
         ]
         
-        request.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
-        
-        // Add any necessary headers
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        // Perform the login request
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            if let data = data {
+        BaseNetwork.shared.performRequest(endpoint: endpoint, method: .post, parameters: parameters) { result in
+            switch result {
+            case .success(let data):
                 do {
                     let decoder = JSONDecoder()
                     
@@ -70,7 +49,10 @@ class UserManager {
                 } catch {
                     completion(.failure(error))
                 }
+            case .failure(let error):
+                // Handle the failure case
+                print("Network request error: \(error)")
             }
-        }.resume()
+        }
     }
 }
