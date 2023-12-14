@@ -12,79 +12,106 @@ class HomeViewController: UIViewController {
 
     @IBOutlet weak var backgroundImageView: UIImageView!
     
+    @IBOutlet weak var startSurveyView: UIView!
+    @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var titleSurvey: UILabel!
     @IBOutlet weak var descriptionSurvey: UILabel!
+    @IBOutlet weak var calendarLabel: UILabel!
+    @IBOutlet weak var nextButton: UIButton!
     
-    @IBOutlet weak var pageControl: UIPageControl!
-    private var currentIndex: Int = 0
-    private var listSurveys: [Survey] = []
+    @IBOutlet weak var descriptionView: UIView!
+    @IBOutlet weak var titleDetail: UILabel!
+    @IBOutlet weak var descriptionDetail: UILabel!
+    @IBOutlet weak var startSurveyButton: UIButton!
+    
+    private var swipeLeftGesture: UISwipeGestureRecognizer!
+    private var swipeRightGesture: UISwipeGestureRecognizer!
+    
+    
+    private var viewModel = HomeViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        SurveyManager.shared.fetchSurveys(pageNumber: 1, pageSize: 8) { result in
-            switch result {
-            case .success(let surveyList):
-                self.listSurveys = surveyList.data
-                DispatchQueue.main.async {
-                    self.configureData()
-                }
-            case .failure(let error):
-                print("Error fetching surveys: \(error)")
-            }
-        }
+        self.calendarLabel.text = Date().formattedString()
+        self.viewModel.delegate = self
+        configureUI()
+        setupSwipeGestures()
+        viewModel.fetchSurveys()
+    }
+    
+    // MARK: - Utils
+    
+    private func configureUI() {
+        self.nextButton.layer.cornerRadius = self.nextButton.frame.width/2
+        self.nextButton.layer.masksToBounds = true
+        self.startSurveyButton.layer.cornerRadius = 12.0
+        self.startSurveyButton.layer.masksToBounds = true
         
         
     }
     
-    private func configureData() {
-        updateUI(for: currentIndex)
-    
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
-        swipeLeft.direction = .left
-        view.addGestureRecognizer(swipeLeft)
+    private func setupSwipeGestures() {
+        swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+        swipeLeftGesture.direction = .left
+        view.addGestureRecognizer(swipeLeftGesture)
         
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
-        swipeRight.direction = .right
-        view.addGestureRecognizer(swipeRight)
-        
-        pageControl.numberOfPages = listSurveys.count
-        pageControl.currentPage = currentIndex
+        swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+        swipeRightGesture.direction = .right
+        view.addGestureRecognizer(swipeRightGesture)
     }
      
     // MARK: - Actions
-    @objc func handleSwipe(_ sender: UISwipeGestureRecognizer) {
-        if sender.direction == .left {
-            showNextArticle()
-        } else if sender.direction == .right {
-            showPreviousArticle()
+    
+    @IBAction func onNextButton(_ sender: UIButton) {
+        showStartSurveyView(isShow: true)
+        view.removeGestureRecognizer(swipeLeftGesture)
+        view.removeGestureRecognizer(swipeRightGesture)
+    }
+    
+    @IBAction func onBackButton(_ sender: UIButton) {
+        showStartSurveyView(isShow: false)
+        view.addGestureRecognizer(swipeLeftGesture)
+        view.addGestureRecognizer(swipeRightGesture)
+    }
+    
+    private func showStartSurveyView(isShow: Bool) {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.backgroundImageView.transform = CGAffineTransform(scaleX: isShow ? 1.3 : 1.0, y: isShow ? 1.3 : 1.0)
+            self.descriptionView.alpha = isShow ? 0.0 : 1.0
+            self.startSurveyView.alpha = isShow ? 1.0 : 0.0
+        })
+    }
+    
+    @IBAction func onStartSurvey(_ sender: UIButton) {
+        let finalXPosition = -self.view.bounds.width
+        UIView.animate(withDuration: 0.3) {
+            self.startSurveyView.transform = CGAffineTransform(translationX: finalXPosition, y: 0)
+            self.startSurveyView.alpha = 0
         }
     }
     
-    func showNextArticle() {
-        currentIndex = (currentIndex + 1) % listSurveys.count
-        fadeTransition()
+    @objc func handleSwipe(_ sender: UISwipeGestureRecognizer) {
+        if sender.direction == .left {
+            viewModel.showNextArticle()
+        } else if sender.direction == .right {
+            viewModel.showPreviousArticle()
+        }
     }
-    
-    func showPreviousArticle() {
-        currentIndex = (currentIndex - 1 + listSurveys.count) % listSurveys.count
-        fadeTransition()
-    }
+}
 
-    // MARK: - Utils
-    
-    func updateUI(for index: Int) {
-        pageControl.currentPage = currentIndex
-        let survey = listSurveys[index]
-        titleSurvey.text = survey.attributes.title
-        descriptionSurvey.text = survey.attributes.description
-        backgroundImageView.kf.setImage(with: URL(string: survey.attributes.coverImageURL))
-    }
-    
-    func fadeTransition() {
-        UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
-            self.updateUI(for: self.currentIndex)
+// MARK: - HomeViewModelDelegate
+
+extension HomeViewController: HomeViewModelDelegate {
+    func updateUIWithData(for index: Int) {
+        UIView.transition(with: view, duration: 0.7, options: .transitionCrossDissolve, animations: {
+            let survey = self.viewModel.listSurveys[index]
+            self.titleSurvey.text = survey.attributes.title
+            self.descriptionSurvey.text = survey.attributes.description
+            self.backgroundImageView.kf.setImage(with: URL(string: survey.attributes.coverImageURL))
+            
+            
+            self.pageControl.numberOfPages = self.viewModel.listSurveys.count
+            self.pageControl.currentPage = self.viewModel.currentIndex
         }, completion: nil)
     }
-    
 }

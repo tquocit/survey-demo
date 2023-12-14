@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RatingView" customModule="survey_demo" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="RatingView" customModule="survey_demo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="315" height="80"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ryw-iF-9fs">
+                    <rect key="frame" x="32.666666666666657" y="15" width="249.99999999999997" height="50"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L5y-gT-zV2">
+                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="L5y-gT-zV2" secondAttribute="height" multiplier="1:1" id="Tfb-S1-7l2"/>
+                                <constraint firstAttribute="width" constant="50" id="YbE-wc-mB3"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        </button>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FZ0-3K-kuA">
+                            <rect key="frame" x="50" y="0.0" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="AWp-hJ-cgW"/>
+                                <constraint firstAttribute="width" secondItem="FZ0-3K-kuA" secondAttribute="height" multiplier="1:1" id="N3Z-tn-2ja"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        </button>
+                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cZS-dQ-6PT">
+                            <rect key="frame" x="100" y="0.0" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="cZS-dQ-6PT" secondAttribute="height" multiplier="1:1" id="cKg-wp-mrA"/>
+                                <constraint firstAttribute="width" constant="50" id="qfe-M7-78W"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        </button>
+                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QfH-c5-VZJ">
+                            <rect key="frame" x="150" y="0.0" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="QfH-c5-VZJ" secondAttribute="height" multiplier="1:1" id="CSe-Zm-25L"/>
+                                <constraint firstAttribute="width" constant="50" id="h01-JU-0An"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        </button>
+                        <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NCm-vb-xPn">
+                            <rect key="frame" x="200" y="0.0" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="IJL-wa-hM3"/>
+                                <constraint firstAttribute="width" secondItem="NCm-vb-xPn" secondAttribute="height" multiplier="1:1" id="nob-Gq-3bQ"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Ryw-iF-9fs" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="6Ks-Yq-gt0"/>
+                <constraint firstItem="Ryw-iF-9fs" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="tH1-XK-vkB"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outletCollection property="ratingButtons" destination="L5y-gT-zV2" collectionClass="NSMutableArray" id="e7c-Kg-DSh"/>
+                <outletCollection property="ratingButtons" destination="FZ0-3K-kuA" collectionClass="NSMutableArray" id="Ity-ri-Ezi"/>
+                <outletCollection property="ratingButtons" destination="cZS-dQ-6PT" collectionClass="NSMutableArray" id="mzQ-j0-PSg"/>
+                <outletCollection property="ratingButtons" destination="QfH-c5-VZJ" collectionClass="NSMutableArray" id="EqC-jE-f7X"/>
+                <outletCollection property="ratingButtons" destination="NCm-vb-xPn" collectionClass="NSMutableArray" id="dmD-UQ-DTh"/>
+            </connections>
+            <point key="canvasLocation" x="54.198473282442748" y="-248.59154929577466"/>
+        </view>
+    </objects>
+</document>
