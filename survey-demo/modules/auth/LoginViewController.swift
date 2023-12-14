@@ -38,9 +38,6 @@ class LoginViewController: UIViewController {
             switch result {
             case .success(let user):
                 // Save tokens after a successful login
-                KeychainManager.shared.saveAccessToken(user.accessToken)
-                KeychainManager.shared.saveRefreshToken(user.refreshToken)
-                
                 DispatchQueue.main.async {
                     self.showHomeScreen()
                 }
@@ -54,14 +51,13 @@ class LoginViewController: UIViewController {
 
     // MARK: - Screens
     func hasValidToken() -> Bool {
-        if let accessToken = KeychainManager.shared.getAccessToken() {
-            // You might also want to check if the token is still valid
-            // For example, compare the current date with the expiration date of the token
-            // If the token has expired, return false; otherwise, return true
-            return true
-        } else {
+        guard let storedUser = UserManager.shared.currentUser else {
             return false
         }
+        let expirationDate = Date(timeIntervalSince1970: storedUser.createdAt + storedUser.expiresIn)
+        let currentDate = Date()
+        
+        return currentDate < expirationDate
     }
     
     func showLoginScreen() {

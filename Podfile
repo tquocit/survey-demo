@@ -7,6 +7,8 @@ target 'survey-demo' do
 
   # Pods for survey-demo
   pod 'Kingfisher', '~> 6.3.1'
+  pod 'KeychainSwift', '~> 13.0'
+
 
   target 'survey-demoTests' do
     inherit! :search_paths

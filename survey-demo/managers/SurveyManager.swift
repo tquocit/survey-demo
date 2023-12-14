@@ -15,8 +15,8 @@ class SurveyManager {
     func fetchSurveys(pageNumber: Int, pageSize: Int, completion: @escaping (Result<SurveyList, Error>) -> Void) {
         let endpoint = "/api/v1/surveys?page[number]=\(pageNumber)&page[size]=\(pageSize)"
         
-        if let userAccessToken = KeychainManager.shared.getAccessToken(),
-           let userTokenType = KeychainManager.shared.getTokenType() {
+        if let userAccessToken = UserManager.shared.currentUser?.accessToken,
+           let userTokenType = UserManager.shared.currentUser?.tokenType {
             let headers = ["Authorization": "\(userTokenType) \(userAccessToken)"]
             
             BaseNetwork.shared.performRequest(endpoint: endpoint, method: .get, headers: headers) { result in
@@ -41,8 +41,8 @@ class SurveyManager {
     
     func fecthSurveyDetails(surveyID: String, completion: @escaping (Result<SurveyDetailsModel, Error>) -> Void) {
         let endpoint = "/api/v1/surveys/\(surveyID)"
-        if let userAccessToken = KeychainManager.shared.getAccessToken(),
-           let userTokenType = KeychainManager.shared.getTokenType() {
+        if let userAccessToken = UserManager.shared.currentUser?.accessToken,
+           let userTokenType = UserManager.shared.currentUser?.tokenType {
             let headers = ["Authorization": "\(userTokenType) \(userAccessToken)"]
             
             BaseNetwork.shared.performRequest(endpoint: endpoint, method: .get, headers: headers) { result in

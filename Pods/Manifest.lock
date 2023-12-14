@@ -1,16 +1,20 @@
 PODS:
+  - KeychainSwift (13.0.0)
   - Kingfisher (6.3.1)
 
 DEPENDENCIES:
+  - KeychainSwift (~> 13.0)
   - Kingfisher (~> 6.3.1)
 
 SPEC REPOS:
   trunk:
+    - KeychainSwift
     - Kingfisher
 
 SPEC CHECKSUMS:
+  KeychainSwift: 23d6c16cbc33f20fafa30c3d783241b4b87d998c
   Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
 
-PODFILE CHECKSUM: f8a9c28971258228bf112afeb724ebf95c184d2c
+PODFILE CHECKSUM: d35f434812ba9f94275c6d90a14fb3ef775cbaef
 
 COCOAPODS: 1.14.3
