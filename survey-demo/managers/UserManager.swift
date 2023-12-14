@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum LoginError: Error {
+    case notLoggedIn
+}
+
 class UserManager {
     static let shared = UserManager()
     
@@ -67,6 +71,34 @@ class UserManager {
             }
         }
     }
+    
+    func logout(completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let user = UserManager.shared.currentUser else {
+            // User not logged in
+            completion(.failure(LoginError.notLoggedIn))
+            return
+        }
+        
+        let endpoint = "/api/v1/oauth/revoke"
+        let parameters = [
+            "token": user.accessToken,
+            "client_id": "ofzl-2h5ympKa0WqqTzqlVJUiRsxmXQmt5tkgrlWnOE",
+            "client_secret": "lMQb900L-mTeU-FVTCwyhjsfBwRCxwwbCitPob96cuU"
+        ]
+        
+        BaseNetwork.shared.performRequest(endpoint: endpoint, method: .post, parameters: parameters) { result in
+            switch result {
+            case .success:
+                // Successfully logged out
+                UserManager.shared.removeCurrentUser()
+                completion(.success(()))
+            case .failure(let error):
+                // Handle the failure case
+                completion(.failure(error))
+            }
+        }
+    }
+
     
     private func decodeUser(data: Data) throws -> User {
         let decoder = JSONDecoder()

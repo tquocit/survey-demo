@@ -69,6 +69,23 @@ class HomeViewController: UIViewController {
     }
      
     // MARK: - Actions
+    @IBAction func onProfileButton(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let menuVC = storyboard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
+        menuVC.delegate = self
+        addChild(menuVC)
+        view.addSubview(menuVC.view)
+        
+        let initialFrame = CGRect(x: view.frame.width, y: 0, width: view.frame.width, height: view.frame.height)
+        menuVC.view.frame = initialFrame
+        
+        UIView.animate(withDuration: 0.3) {
+            menuVC.view.frame = CGRect(x: 0, y: 0, 
+                                       width: self.view.frame.width,
+                                       height: self.view.frame.height)
+        }
+        
+    }
     
     @IBAction func onNextButton(_ sender: UIButton) {
         showStartSurveyView(isShow: true)
@@ -157,5 +174,14 @@ extension HomeViewController: SurveyDetailsViewControllerDelegate {
             
             
         }
+    }
+}
+
+extension HomeViewController: MenuViewControllerDelegate {
+    func logoutSuccessfully() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        UIApplication.shared.windows.first?.rootViewController = loginViewController
+        UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
 }

@@ -23,14 +23,6 @@ class LoginViewController: UIViewController {
         addLogoIntoScreen()
         viewModel.delegate = self
         viewModel.checkTokenAndNavigate()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-//            if self.hasValidToken() {
-//                self.showHomeScreen()
-//            } else {
-//                self.addAnimationLogin()
-//            }
-//        }
-        
     }
     
     // MARK: Actions
@@ -50,18 +42,6 @@ class LoginViewController: UIViewController {
             }
         }
     }
-    
-
-    // MARK: - Screens
-//    func hasValidToken() -> Bool {
-//        guard let storedUser = UserManager.shared.currentUser else {
-//            return false
-//        }
-//        let expirationDate = Date(timeIntervalSince1970: storedUser.createdAt + storedUser.expiresIn)
-//        let currentDate = Date()
-//        
-//        return currentDate < expirationDate
-//    }
     
     // MARK: Helpers
     
