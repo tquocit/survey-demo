@@ -46,8 +46,6 @@ class HomeViewController: UIViewController {
         self.nextButton.layer.masksToBounds = true
         self.startSurveyButton.layer.cornerRadius = 12.0
         self.startSurveyButton.layer.masksToBounds = true
-        
-        
     }
     
     private func setupSwipeGestures() {
@@ -59,22 +57,34 @@ class HomeViewController: UIViewController {
         swipeRightGesture.direction = .right
         view.addGestureRecognizer(swipeRightGesture)
     }
+    
+    private func addOrRemoveSwipeGesture(isAdd: Bool) {
+        if isAdd {
+            view.addGestureRecognizer(swipeLeftGesture)
+            view.addGestureRecognizer(swipeRightGesture)
+        } else {
+            view.removeGestureRecognizer(swipeLeftGesture)
+            view.removeGestureRecognizer(swipeRightGesture)
+        }
+    }
      
     // MARK: - Actions
     
     @IBAction func onNextButton(_ sender: UIButton) {
         showStartSurveyView(isShow: true)
-        view.removeGestureRecognizer(swipeLeftGesture)
-        view.removeGestureRecognizer(swipeRightGesture)
+        addOrRemoveSwipeGesture(isAdd: false)
     }
     
     @IBAction func onBackButton(_ sender: UIButton) {
         showStartSurveyView(isShow: false)
-        view.addGestureRecognizer(swipeLeftGesture)
-        view.addGestureRecognizer(swipeRightGesture)
+        addOrRemoveSwipeGesture(isAdd: true)
     }
     
     private func showStartSurveyView(isShow: Bool) {
+        let survey = self.viewModel.listSurveys[self.viewModel.currentIndex]
+        self.titleDetail.text = survey.attributes.title
+        self.descriptionDetail.text = survey.attributes.description
+        
         UIView.animate(withDuration: 0.5, animations: {
             self.backgroundImageView.transform = CGAffineTransform(scaleX: isShow ? 1.3 : 1.0, y: isShow ? 1.3 : 1.0)
             self.descriptionView.alpha = isShow ? 0.0 : 1.0
@@ -87,6 +97,7 @@ class HomeViewController: UIViewController {
         UIView.animate(withDuration: 0.3) {
             self.startSurveyView.transform = CGAffineTransform(translationX: finalXPosition, y: 0)
             self.startSurveyView.alpha = 0
+            self.startSurveyDetails()
         }
     }
     
@@ -96,6 +107,27 @@ class HomeViewController: UIViewController {
         } else if sender.direction == .right {
             viewModel.showPreviousArticle()
         }
+    }
+    
+    private func startSurveyDetails() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let surveyDetailsVC = storyboard.instantiateViewController(withIdentifier: "SurveyDetailsViewController") as! SurveyDetailsViewController
+        
+        let surveyDetailsViewModel = SurveyDetailsViewModel(surveyID: self.viewModel.listSurveys[self.viewModel.currentIndex].id)
+        
+        surveyDetailsVC.setViewModel(surveyDetailsViewModel)
+        surveyDetailsVC.delegate = self
+        surveyDetailsVC.view.alpha = 0
+
+        addChild(surveyDetailsVC)
+        surveyDetailsVC.view.frame = view.bounds
+        view.addSubview(surveyDetailsVC.view)
+
+        UIView.animate(withDuration: 0.3) {
+            surveyDetailsVC.view.alpha = 1
+        }
+
+        surveyDetailsVC.didMove(toParent: self)
     }
 }
 
@@ -113,5 +145,17 @@ extension HomeViewController: HomeViewModelDelegate {
             self.pageControl.numberOfPages = self.viewModel.listSurveys.count
             self.pageControl.currentPage = self.viewModel.currentIndex
         }, completion: nil)
+    }
+}
+
+extension HomeViewController: SurveyDetailsViewControllerDelegate {
+    func onDimissSurveyDetails() {
+        UIView.animate(withDuration: 0.3) {
+            self.startSurveyView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.showStartSurveyView(isShow: false)
+            self.addOrRemoveSwipeGesture(isAdd: true)
+            
+            
+        }
     }
 }

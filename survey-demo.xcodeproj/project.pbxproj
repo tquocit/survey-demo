@@ -26,6 +26,7 @@
 		17913FE52B2AC52F00DE3AC2 /* RatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17913FE42B2AC52F00DE3AC2 /* RatingView.xib */; };
 		17913FE72B2AE5E100DE3AC2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17913FE62B2AE5E100DE3AC2 /* HomeViewModel.swift */; };
 		17913FE92B2B118B00DE3AC2 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17913FE82B2B118B00DE3AC2 /* Date+Extension.swift */; };
+		17913FEB2B2B153C00DE3AC2 /* SurveyDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17913FEA2B2B153C00DE3AC2 /* SurveyDetailsViewModel.swift */; };
 		17AB9B4E2B26E584008B3595 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17AB9B4D2B26E584008B3595 /* AppDelegate.swift */; };
 		17AB9B502B26E584008B3595 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17AB9B4F2B26E584008B3595 /* SceneDelegate.swift */; };
 		17AB9B552B26E584008B3595 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17AB9B532B26E584008B3595 /* Main.storyboard */; };
@@ -75,6 +76,7 @@
 		17913FE42B2AC52F00DE3AC2 /* RatingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingView.xib; sourceTree = "<group>"; };
 		17913FE62B2AE5E100DE3AC2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		17913FE82B2B118B00DE3AC2 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		17913FEA2B2B153C00DE3AC2 /* SurveyDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyDetailsViewModel.swift; sourceTree = "<group>"; };
 		17AB9B4A2B26E584008B3595 /* survey-demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "survey-demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		17AB9B4D2B26E584008B3595 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17AB9B4F2B26E584008B3595 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				172C9A8A2B28537D00260D03 /* SurveyDetailsViewController.swift */,
+				17913FEA2B2B153C00DE3AC2 /* SurveyDetailsViewModel.swift */,
 				174797062B2A05FD00203099 /* SurveyQuestionCollectionViewCell.swift */,
 				17913FE22B2AC52700DE3AC2 /* RatingView.swift */,
 				17913FE42B2AC52F00DE3AC2 /* RatingView.xib */,
@@ -541,6 +544,7 @@
 				172C9A842B282DF600260D03 /* Survey.swift in Sources */,
 				172C9A902B29846000260D03 /* SurveyDetails.swift in Sources */,
 				172C9A7A2B2802DD00260D03 /* HomeViewController.swift in Sources */,
+				17913FEB2B2B153C00DE3AC2 /* SurveyDetailsViewModel.swift in Sources */,
 				172C9A7C2B28196600260D03 /* UserManager.swift in Sources */,
 				17913FE32B2AC52700DE3AC2 /* RatingView.swift in Sources */,
 				172C9A872B28437A00260D03 /* BaseNetwork.swift in Sources */,

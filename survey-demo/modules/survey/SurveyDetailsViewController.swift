@@ -17,27 +17,32 @@ class SurveyDetailsViewController: UIViewController {
     
     weak var delegate: SurveyDetailsViewControllerDelegate?
     
-    var arrayQuestionsSurvey = [QuestionModel]()
+    var viewModel: SurveyDetailsViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupCollectionView()
+        viewModel.fetchSurveyDetails()
         
-        self.setupCollectionView()
         
-        SurveyManager.shared.fecthSurveyDetails(surveyID: "d5de6a8f8f5f1cfe51bc") { result in
-            switch result {
-            case.success(let response):
-                DispatchQueue.main.async {
-                    self.arrayQuestionsSurvey = response.questions
-                    self.collectionView.reloadData()
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
+//        SurveyManager.shared.fecthSurveyDetails(surveyID: "d5de6a8f8f5f1cfe51bc") { result in
+//            switch result {
+//            case.success(let response):
+//                DispatchQueue.main.async {
+//                    self.arrayQuestionsSurvey = response.questions
+//                    self.collectionView.reloadData()
+//                }
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
     }
     
     // MARK: - Utils
+    func setViewModel(_ viewModel: SurveyDetailsViewModel) {
+        self.viewModel = viewModel
+        self.viewModel.delegate = self
+    }
     
     private func setupCollectionView() {
         self.collectionView.dataSource = self
@@ -69,19 +74,32 @@ class SurveyDetailsViewController: UIViewController {
 extension SurveyDetailsViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.arrayQuestionsSurvey.count
+        return self.viewModel.arrayQuestionsSurvey.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SurveyQuestionCollectionViewCell", for: indexPath) as? SurveyQuestionCollectionViewCell else {
             fatalError("Can not dequeue cell")
         }
-        cell.indexLabel.text = "\(indexPath.row + 1)/\(self.arrayQuestionsSurvey.count)"
-        cell.configureCellWithQuestion(self.arrayQuestionsSurvey[indexPath.item])
+        cell.indexLabel.text = "\(indexPath.row + 1)/\(self.viewModel.arrayQuestionsSurvey.count)"
+        cell.configureCellWithQuestion(self.viewModel.arrayQuestionsSurvey[indexPath.item])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.bounds.size
+    }
+}
+
+extension SurveyDetailsViewController: SurveyDetailsViewModelDelegate {
+    func surveyDetailsDidLoad() {
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
+    
+    func surveyDetailsLoadFailed(with error: Error) {
+        print("Failed to load survey details: \(error)")
+        // Handle error if needed
     }
 }
