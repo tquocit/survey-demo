@@ -15,18 +15,21 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: CustomTextField!
     private var logoTopConstraint: NSLayoutConstraint!
     
+    private var viewModel = LoginViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addLogoIntoScreen()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            if self.hasValidToken() {
-                self.showHomeScreen()
-            } else {
-                self.addAnimationLogin()
-            }
-        }
+        viewModel.delegate = self
+        viewModel.checkTokenAndNavigate()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//            if self.hasValidToken() {
+//                self.showHomeScreen()
+//            } else {
+//                self.addAnimationLogin()
+//            }
+//        }
         
     }
     
@@ -50,31 +53,16 @@ class LoginViewController: UIViewController {
     
 
     // MARK: - Screens
-    func hasValidToken() -> Bool {
-        guard let storedUser = UserManager.shared.currentUser else {
-            return false
-        }
-        let expirationDate = Date(timeIntervalSince1970: storedUser.createdAt + storedUser.expiresIn)
-        let currentDate = Date()
-        
-        return currentDate < expirationDate
-    }
+//    func hasValidToken() -> Bool {
+//        guard let storedUser = UserManager.shared.currentUser else {
+//            return false
+//        }
+//        let expirationDate = Date(timeIntervalSince1970: storedUser.createdAt + storedUser.expiresIn)
+//        let currentDate = Date()
+//        
+//        return currentDate < expirationDate
+//    }
     
-    func showLoginScreen() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-        UIApplication.shared.windows.first?.rootViewController = loginViewController
-        UIApplication.shared.windows.first?.makeKeyAndVisible()
-    }
-    
-    func showHomeScreen() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-        UIApplication.shared.windows.first?.rootViewController = homeViewController
-        UIApplication.shared.windows.first?.makeKeyAndVisible()
-    }
-    
-        
     // MARK: Helpers
     
     private func addLogoIntoScreen() {
@@ -90,8 +78,21 @@ class LoginViewController: UIViewController {
             logoTopConstraint,
         ])
     }
+
+}
+
+// MARK: - LoginViewModelDelegate
+
+extension LoginViewController: LoginViewModelDelegate {
     
-    private func addAnimationLogin() {
+    func showHomeScreen() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+        UIApplication.shared.windows.first?.rootViewController = homeViewController
+        UIApplication.shared.windows.first?.makeKeyAndVisible()
+    }
+    
+    func addAnimationLogin() {
         let blurEffectView = self.background.applyBlurEffect(style: .dark)
         blurEffectView.alpha = 0
         self.background.addSubview(blurEffectView)
@@ -108,6 +109,4 @@ class LoginViewController: UIViewController {
 
         }
     }
-    
-
 }

@@ -23,19 +23,6 @@ class SurveyDetailsViewController: UIViewController {
         super.viewDidLoad()
         setupCollectionView()
         viewModel.fetchSurveyDetails()
-        
-        
-//        SurveyManager.shared.fecthSurveyDetails(surveyID: "d5de6a8f8f5f1cfe51bc") { result in
-//            switch result {
-//            case.success(let response):
-//                DispatchQueue.main.async {
-//                    self.arrayQuestionsSurvey = response.questions
-//                    self.collectionView.reloadData()
-//                }
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
     }
     
     // MARK: - Utils

@@ -27,6 +27,7 @@
 		17913FE72B2AE5E100DE3AC2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17913FE62B2AE5E100DE3AC2 /* HomeViewModel.swift */; };
 		17913FE92B2B118B00DE3AC2 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17913FE82B2B118B00DE3AC2 /* Date+Extension.swift */; };
 		17913FEB2B2B153C00DE3AC2 /* SurveyDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17913FEA2B2B153C00DE3AC2 /* SurveyDetailsViewModel.swift */; };
+		17913FED2B2B513700DE3AC2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17913FEC2B2B513700DE3AC2 /* LoginViewModel.swift */; };
 		17AB9B4E2B26E584008B3595 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17AB9B4D2B26E584008B3595 /* AppDelegate.swift */; };
 		17AB9B502B26E584008B3595 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17AB9B4F2B26E584008B3595 /* SceneDelegate.swift */; };
 		17AB9B552B26E584008B3595 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17AB9B532B26E584008B3595 /* Main.storyboard */; };
@@ -77,6 +78,7 @@
 		17913FE62B2AE5E100DE3AC2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		17913FE82B2B118B00DE3AC2 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		17913FEA2B2B153C00DE3AC2 /* SurveyDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyDetailsViewModel.swift; sourceTree = "<group>"; };
+		17913FEC2B2B513700DE3AC2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		17AB9B4A2B26E584008B3595 /* survey-demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "survey-demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		17AB9B4D2B26E584008B3595 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17AB9B4F2B26E584008B3595 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				177AC3492B26EE8400F7566D /* LoginViewController.swift */,
+				17913FEC2B2B513700DE3AC2 /* LoginViewModel.swift */,
 			);
 			path = auth;
 			sourceTree = "<group>";
@@ -553,6 +556,7 @@
 				174797072B2A05FD00203099 /* SurveyQuestionCollectionViewCell.swift in Sources */,
 				17913FE92B2B118B00DE3AC2 /* Date+Extension.swift in Sources */,
 				172C9A8B2B28537D00260D03 /* SurveyDetailsViewController.swift in Sources */,
+				17913FED2B2B513700DE3AC2 /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
